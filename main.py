@@ -17,8 +17,8 @@ pygame.display.set_icon(icon)
 
 # Загрузка изображения цели и установка начальных параметров
 target_img = pygame.image.load('img/target.png')
-target_width = 50
-target_height = 50
+target_width = 80
+target_height = 80
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 target_x_speed = 0.02  # начальная скорость движения цели по оси X
