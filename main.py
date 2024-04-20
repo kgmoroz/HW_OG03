@@ -2,6 +2,8 @@ import pygame
 import random
 import sys
 
+clock = pygame.time.Clock()
+
 # Инициализация pygame
 pygame.init()
 
@@ -18,7 +20,8 @@ pygame.display.set_icon(icon)
 # Загрузка изображения цели, прицела и звукового файла
 target_img = pygame.image.load('img/target.png')
 crosshair_img = pygame.image.load('img/crosshair.png')
-shoot_sound = pygame.mixer.Sound('img/shoot.wav')  # Загрузка звукового файла
+shoot_sound = pygame.mixer.Sound('img/shoot.wav')  # Загрузка звукового файла при попадании
+miss_sound = pygame.mixer.Sound('img/miss.wav')  # Загрузка звукового файла при промахе
 
 # Установка начального положения и размеров цели
 target_width = 50
@@ -28,6 +31,7 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
 # Установка начальных скоростей движения цели по осям X и Y
 speed_step = 0.02
+speed_step_multiplier = 1/speed_step # Установка множителя для отображения скорости в целых числах
 target_x_speed = speed_step
 target_y_speed = speed_step
 
@@ -42,6 +46,7 @@ font = pygame.font.Font(None, 36)
 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 # Главный цикл игры
+clock.tick(60)  # Устанавливает максимальный FPS в 60
 running = True
 while running:
     screen.fill(color)  # Заполнение фона цветом
@@ -62,6 +67,9 @@ while running:
                 target_y_speed += speed_step * (
                     1 if target_y_speed > 0 else -1)  # Увеличение скорости движения по Y с учетом направления
                 shoot_sound.play()  # Воспроизведение звука выстрела
+            else:
+                points -= 1  # Уменьшение количества очков
+                miss_sound.play()  # Воспроизведение звука промаха
 
     # Обновление позиции цели
     target_x += target_x_speed
@@ -75,7 +83,8 @@ while running:
 
     # Отрисовка текста очков и скорости
     score_text = font.render(f"Очки: {points}", True, (255, 255, 255))
-    speed_text = font.render(f"Скорость: {abs(target_x_speed):.2f}", True, (255, 255, 255))
+    #speed_text = font.render(f"Скорость: {abs(target_x_speed*speed_step_multiplier):.2f}", True, (255, 255, 255))
+    speed_text = font.render(f"Скорость: {int(round(abs(target_x_speed * speed_step_multiplier)))}", True,(255, 255, 255))
     screen.blit(score_text, (10, 10))
     screen.blit(speed_text, (10, 50))
 
