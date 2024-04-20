@@ -21,8 +21,8 @@ target_width = 50
 target_height = 50
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
-target_x_speed = 2  # начальная скорость движения цели по оси X
-target_y_speed = 2  # начальная скорость движения цели по оси Y
+target_x_speed = 0.02  # начальная скорость движения цели по оси X
+target_y_speed = 0.02  # начальная скорость движения цели по оси Y
 
 # Начальное количество очков и шрифт для отображения текста
 points = 0
@@ -49,8 +49,8 @@ while running:
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
                 points += 1
-                target_x_speed += 0.5
-                target_y_speed += 0.5
+                target_x_speed += 0.02
+                target_y_speed += 0.02
 
     # Обновление позиции цели
     target_x += target_x_speed
